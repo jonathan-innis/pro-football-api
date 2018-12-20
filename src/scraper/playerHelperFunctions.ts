@@ -72,16 +72,31 @@ export function getBirthPlace($: CheerioStatic): string{
     }
 }
 
-export function getCollege($: CheerioStatic): string{
+export function getCollege($: CheerioStatic): string[] | null{
     try{
-        const data = $('#meta > div > p:nth-child(6)');
-        const rawCollege = $(data[0]).text().replace(/(\n\t|\n)/gm,"");
-        console.log(rawCollege);
-        const college = rawCollege.split('College: ')[1].slice(3);
-        return college;
+        let colleges = null;
+        let blockIndex = 1;
+        while (!colleges && blockIndex < 10){
+            let data = $(`#meta > div > p:nth-child(${blockIndex})`);
+            let rawCollege = $(data[0]).text().replace(/(\n\t|\n|\t)/gm,"");
+            colleges = rawCollege.split('College: ')[1];
+            if (colleges){
+                if (colleges.includes('(College Stats)'))
+                    colleges = colleges.slice(undefined, colleges.length - 16);
+                colleges = colleges.split(',');
+                for (let i = 0; i < colleges.length; i++){
+                    if (i === 0) colleges[i] = colleges[i].slice(2);
+                    else colleges[i] = colleges[i].slice(1);
+                }
+                if (colleges[0] == 'none') return null;
+                return colleges;
+            }
+            blockIndex++;
+        }
+        return null;
     }
     catch(error){
         console.log(error);
-        return '';
+        return [];
     }
 }

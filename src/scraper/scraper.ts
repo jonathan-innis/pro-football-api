@@ -41,6 +41,6 @@ async function getPlayerInfo(URL: string): Promise<void>{
     const weight: number = getWeight($);
     const birthDate: Date = getBirthDate($);
     const birthPlace: string = getBirthPlace($);
-    const college: string = getCollege($)
-    console.log(name, positions, height, weight, birthDate, birthPlace, college);
+    const colleges: string[] | null = getCollege($)
+    console.log(name, positions, height, weight, birthDate, birthPlace, colleges);
 }
