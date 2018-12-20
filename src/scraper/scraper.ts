@@ -2,7 +2,7 @@ import rp = require('request-promise');
 import cheerio = require('cheerio');
 import mongoose = require('mongoose');
 import {MONGO_URL} from '../constants';
-import {getName, getPositions, getHeight, getWeight, getBirthDate, getBirthPlace, getCollege} from './playerHelperFunctions';
+import {getName, getPositions, getHeight, getWeight, getBirthDate, getBirthPlace, getCollege, getHighSchool} from './playerHelperFunctions';
 
 mongoose.connect(MONGO_URL, {useNewUrlParser: true}).then(() => {
     scrape().then(() => {
@@ -42,5 +42,6 @@ async function getPlayerInfo(URL: string): Promise<void>{
     const birthDate: Date = getBirthDate($);
     const birthPlace: string = getBirthPlace($);
     const colleges: string[] | null = getCollege($)
-    console.log(name, positions, height, weight, birthDate, birthPlace, colleges);
+    const highSchool: string | null = getHighSchool($);
+    console.log(name, positions, height, weight, birthDate, birthPlace, colleges, highSchool);
 }

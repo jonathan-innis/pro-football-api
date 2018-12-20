@@ -4,7 +4,7 @@ export function getName($: CheerioStatic): string{
         return $(data[0]).text();
     }
     catch(error){
-        console.log(error);
+        console.error(error);
         return '';
     }
 }
@@ -17,7 +17,7 @@ export function getPositions($: CheerioStatic): string[]{
         return pos.split('-').filter((element: string) => {return element !== ''});
     }
     catch(error){
-        console.log(error);
+        console.error(error);
         return [];
     }
 }
@@ -31,7 +31,7 @@ export function getHeight($: CheerioStatic): number{
         return (feet*12) + inches;
     }
     catch(error){
-        console.log(error);
+        console.error(error);
         return 0;
     }
 }
@@ -42,7 +42,7 @@ export function getWeight($: CheerioStatic): number{
         return parseInt($(data[0]).text().split('lb')[0]);
     }
     catch(error){
-        console.log(error);
+        console.error(error);
         return 0;
     }
 }
@@ -54,7 +54,7 @@ export function getBirthDate($: CheerioStatic): Date{
         return new Date(rawDate);
     }
     catch(error){
-        console.log(error);
+        console.error(error);
         return new Date();
     }
 }
@@ -67,36 +67,61 @@ export function getBirthPlace($: CheerioStatic): string{
         return place;
     }
     catch(error){
-        console.log(error);
+        console.error(error);
         return '';
     }
 }
 
 export function getCollege($: CheerioStatic): string[] | null{
     try{
-        let colleges = null;
-        let blockIndex = 1;
-        while (!colleges && blockIndex < 10){
-            let data = $(`#meta > div > p:nth-child(${blockIndex})`);
-            let rawCollege = $(data[0]).text().replace(/(\n\t|\n|\t)/gm,"");
-            colleges = rawCollege.split('College: ')[1];
-            if (colleges){
-                if (colleges.includes('(College Stats)'))
-                    colleges = colleges.slice(undefined, colleges.length - 16);
-                colleges = colleges.split(',');
-                for (let i = 0; i < colleges.length; i++){
-                    if (i === 0) colleges[i] = colleges[i].slice(2);
-                    else colleges[i] = colleges[i].slice(1);
-                }
-                if (colleges[0] == 'none') return null;
-                return colleges;
+        let rawColleges = searchSummaryBlock($, 'College: ');
+        
+        if (rawColleges){
+            if (rawColleges.includes('(College Stats)'))
+                rawColleges = rawColleges.slice(undefined, rawColleges.length - 16);
+            let colleges = rawColleges.split(',');
+            for (let i = 0; i < colleges.length; i++){
+                if (i === 0) colleges[i] = colleges[i].slice(2);
+                else colleges[i] = colleges[i].slice(1);
             }
-            blockIndex++;
+            if (colleges[0] == 'none') return null;
+            return colleges;
         }
         return null;
     }
     catch(error){
-        console.log(error);
-        return [];
+        console.error(error);
+        return null;
     }
+}
+
+export function getHighSchool($: CheerioStatic): string | null{
+    try{
+        let rawHighSchool = searchSummaryBlock($, 'High School: ');
+        
+        if (rawHighSchool){
+            const highSchool = rawHighSchool.slice(2);
+            return highSchool;
+        }
+        return null;
+    }
+    catch(error){
+        console.error(error);
+        return null;
+    }
+}
+
+function searchSummaryBlock($: CheerioStatic, searchableItem: string): string | null{
+    let element = null;
+    let blockIndex = 1;
+    while (!element && blockIndex < 10){
+        let data = $(`#meta > div > p:nth-child(${blockIndex})`);
+        let rawElement = $(data[0]).text().replace(/(\n\t|\n|\t)/gm,"");
+        element = rawElement.split(searchableItem)[1];
+        if (element){
+            return element;
+        }
+        blockIndex++;
+    }
+    return null;
 }
