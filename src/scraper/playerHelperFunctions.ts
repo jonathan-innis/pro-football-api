@@ -157,14 +157,6 @@ export function getApproximateValue($: CheerioStatic): number | null{
     return parseInt(rawValue);
 }
 
-// function searchSummaryBlock($: CheerioStatic, searchableItem: string): string | null{
-//     let element = null;
-//     let blockIndex = 1;
-//     while (!element && blockIndex < 10){
-//         let data = $(`#info > div.stats_pullout > div:nth-child(2) > div:nth-child(${blockIndex})`);
-//     }
-// }
-
 function searchOverviewBlock($: CheerioStatic, searchableItem: string): string | null{
     let element = null;
     let blockIndex = 1;
