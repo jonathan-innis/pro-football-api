@@ -1,8 +1,8 @@
 import mongoose = require('mongoose');
 import {prop} from 'typegoose';
-import {Player, RecordData} from './Player';
+import {Player} from './Player';
 import {Model, Document} from 'mongoose';
-import { MONGO_URL } from '../../constants';
+import { MONGO_URL, RecordData } from '../../constants';
 
 mongoose.connect(MONGO_URL);
 

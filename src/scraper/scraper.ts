@@ -1,8 +1,9 @@
 import rp = require('request-promise');
 import cheerio = require('cheerio');
 import mongoose = require('mongoose');
-import {MONGO_URL} from '../constants';
-import {getName, getPositions, getHeight, getWeight, getBirthDate, getBirthPlace, getCollege, getHighSchool} from './playerHelperFunctions';
+import {MONGO_URL, DraftInfo, PlayerInfo} from '../constants';
+import {getName, getPositions, getHeight, getWeight, getBirthDate, getBirthPlace, getCollege, getHighSchool, getDraftInfo, getHallOfFame, getGamesPlayed, getApproximateValue} from './playerHelperFunctions';
+import { PlayerModel } from '../server/models/Player';
 
 mongoose.connect(MONGO_URL, {useNewUrlParser: true}).then(() => {
     scrape().then(() => {
@@ -17,7 +18,9 @@ async function scrape(): Promise<void> {
         URL = `https://www.pro-football-reference.com/players/${(i+10).toString(36).toUpperCase()}/`;
         const playerLinks = await getPlayerLinks(URL);
         for (let link of playerLinks){
-            await getPlayerInfo(`https://www.pro-football-reference.com${link}`);
+            const playerInfo: PlayerInfo = await getPlayerInfo(`https://www.pro-football-reference.com${link}`);
+            const model = new PlayerModel(playerInfo)
+            model.save().then(() => {console.log(`Saved ${playerInfo.name}`)});
         }
     }
 }
@@ -32,7 +35,7 @@ async function getPlayerLinks(URL: string): Promise<String[]> {
     return playerLinks;
 }
 
-async function getPlayerInfo(URL: string): Promise<void>{
+async function getPlayerInfo(URL: string): Promise<PlayerInfo>{
     const html = await rp(URL);
     const $: CheerioStatic = cheerio.load(html);
     const name: string = getName($);
@@ -43,5 +46,9 @@ async function getPlayerInfo(URL: string): Promise<void>{
     const birthPlace: string = getBirthPlace($);
     const colleges: string[] | null = getCollege($)
     const highSchool: string | null = getHighSchool($);
-    console.log(name, positions, height, weight, birthDate, birthPlace, colleges, highSchool);
+    const draftInfo: DraftInfo | null = getDraftInfo($);
+    const hallOfFame: boolean = getHallOfFame($);
+    const gamesPlayed: number = getGamesPlayed($);
+    const approximateValue: number | null = getApproximateValue($);
+    return {name, positions, height, weight, birthDate, birthPlace, colleges, highSchool, draftInfo, hallOfFame, gamesPlayed, approximateValue};
 }

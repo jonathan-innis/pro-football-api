@@ -74,7 +74,7 @@ export function getBirthPlace($: CheerioStatic): string{
 
 export function getCollege($: CheerioStatic): string[] | null{
     try{
-        let rawColleges = searchSummaryBlock($, 'College: ');
+        let rawColleges = searchOverviewBlock($, 'College: ');
         
         if (rawColleges){
             if (rawColleges.includes('(College Stats)'))
@@ -97,7 +97,7 @@ export function getCollege($: CheerioStatic): string[] | null{
 
 export function getHighSchool($: CheerioStatic): string | null{
     try{
-        let rawHighSchool = searchSummaryBlock($, 'High School: ');
+        let rawHighSchool = searchOverviewBlock($, 'High School: ');
         
         if (rawHighSchool){
             const highSchool = rawHighSchool.slice(2);
@@ -111,7 +111,61 @@ export function getHighSchool($: CheerioStatic): string | null{
     }
 }
 
-function searchSummaryBlock($: CheerioStatic, searchableItem: string): string | null{
+export function getDraftInfo($: CheerioStatic): {team: string, round: number, overall: number, year: number} | null{
+    try{
+        let rawDraftInfo = searchOverviewBlock($, 'Draft: ');
+
+        if (rawDraftInfo){
+            const teamIndex = rawDraftInfo.indexOf('in the');
+            const team = rawDraftInfo.slice(undefined, teamIndex - 1);
+
+            const roundIndex = rawDraftInfo.indexOf('round');
+            const round = parseInt(rawDraftInfo.slice(teamIndex + 7, roundIndex - 3));
+
+            const startOverall = rawDraftInfo.indexOf('(');
+            const endOverall = rawDraftInfo.indexOf('overall');
+            const overall = parseInt(rawDraftInfo.slice(startOverall + 1, endOverall - 3));
+
+            const yearIndex = rawDraftInfo.indexOf('of the');
+            const year = parseInt(rawDraftInfo.slice(yearIndex + 7, yearIndex + 11));
+
+            return {team, round, overall, year};
+        }
+        return null;
+    }
+    catch(error){
+        console.error(error);
+        return null;
+    }
+}
+
+export function getHallOfFame($: CheerioStatic): boolean{
+    if (searchOverviewBlock($, 'Hall of Fame: ')) return true;
+    return false;
+}
+
+export function getGamesPlayed($: CheerioStatic): number{
+    const data = $('#info > div.stats_pullout > div:nth-child(2) > div:nth-child(1) > p');
+    const rawGames = $(data[0]).text();
+    return parseInt(rawGames);
+}
+
+export function getApproximateValue($: CheerioStatic): number | null{
+    const data = $('#info > div.stats_pullout > div:nth-child(2) > div:nth-child(2) > p');
+    const rawValue = $(data[0]).text();
+    if (rawValue === '') return null;
+    return parseInt(rawValue);
+}
+
+// function searchSummaryBlock($: CheerioStatic, searchableItem: string): string | null{
+//     let element = null;
+//     let blockIndex = 1;
+//     while (!element && blockIndex < 10){
+//         let data = $(`#info > div.stats_pullout > div:nth-child(2) > div:nth-child(${blockIndex})`);
+//     }
+// }
+
+function searchOverviewBlock($: CheerioStatic, searchableItem: string): string | null{
     let element = null;
     let blockIndex = 1;
     while (!element && blockIndex < 10){

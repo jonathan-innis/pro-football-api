@@ -1,23 +1,11 @@
-import { prop, index, Typegoose } from 'typegoose';
+import { prop, Typegoose } from 'typegoose-es5';
+import {Model, Document} from 'mongoose';
+import { DraftInfo } from '../../constants';
 
-export type DraftInfo = {
-    team: string,
-    round: number,
-    overall: number,
-    year: Date
-}
+export class Player extends Typegoose{
+    @prop({required: true}) name?: string;
 
-export type RecordData = {
-    won: number,
-    lost: number,
-    tied: number
-}
-
-@index({name: 'text'})
-export abstract class Player extends Typegoose{
-    @prop({required: true, index: true}) name?: string;
-
-    @prop({required: true, index: true}) position?: string;
+    @prop({required: true}) positions?: string[];
 
     @prop() height?: number;
 
@@ -27,15 +15,17 @@ export abstract class Player extends Typegoose{
 
     @prop() birthPlace?: string;
 
-    @prop({index: true}) college?: string;
+    @prop({index: true}) colleges?: string[] | null;
 
-    @prop() highSchool?: string;
+    @prop() highSchool?: string | null;
 
-    @prop() draft?: DraftInfo;
+    @prop() draftInfo?: DraftInfo | null;
 
     @prop({index: true}) hallOfFame?: boolean;
 
     @prop() gamesPlayed?: number;
 
-    @prop() approximateValue?: number;
+    @prop() approximateValue?: number | null;
 }
+
+export const PlayerModel: Model<Document> = new Player().getModelForClass(Player);
