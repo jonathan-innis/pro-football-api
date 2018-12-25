@@ -12,8 +12,11 @@ export function getName($: CheerioStatic): string{
 export function getPositions($: CheerioStatic): string[]{
     try{
         const data = $('#meta > div > p:nth-child(3)');
-        const rawPos = $(data[0]).text().replace(/(\n\t|\n)/gm,"");
-        const pos = rawPos.split('Position: ')[1];
+        const rawPos = $(data[0]).text().replace(/(\n\t|\n|\t)/gm,"");
+        let pos = rawPos.split('Position: ')[1];
+        if (pos.indexOf('Throws:') !== -1){
+            pos = pos.slice(undefined, pos.indexOf('Throws:'));
+        }
         return pos.split('-').filter((element: string) => {return element !== ''});
     }
     catch(error){

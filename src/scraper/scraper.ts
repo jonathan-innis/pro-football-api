@@ -2,8 +2,10 @@ import rp = require('request-promise');
 import cheerio = require('cheerio');
 import mongoose = require('mongoose');
 import {MONGO_URL, DraftInfo, PlayerInfo} from '../constants';
-import {getName, getPositions, getHeight, getWeight, getBirthDate, getBirthPlace, getCollege, getHighSchool, getDraftInfo, getHallOfFame, getGamesPlayed, getApproximateValue} from './playerHelperFunctions';
+import {getName, getPositions, getHeight, getWeight, getBirthDate, getBirthPlace, getCollege, getHighSchool, getDraftInfo, getHallOfFame, getGamesPlayed, getApproximateValue} from './player-helper/playerHelper';
 import { PlayerModel } from '../server/models/Player';
+import { getQuarterBackData } from './player-helper/quarterbackHelper';
+import { getStats } from './stats-helper/statsHelper';
 
 mongoose.connect(MONGO_URL, {useNewUrlParser: true}).then(() => {
     scrape().then(() => {
@@ -20,7 +22,7 @@ async function scrape(): Promise<void> {
         for (let link of playerLinks){
             const playerInfo: PlayerInfo = await getPlayerInfo(`https://www.pro-football-reference.com${link}`);
             const model = new PlayerModel(playerInfo)
-            model.save().then(() => {console.log(`Saved ${playerInfo.name}`)});
+            model.save();
         }
     }
 }
@@ -50,5 +52,12 @@ async function getPlayerInfo(URL: string): Promise<PlayerInfo>{
     const hallOfFame: boolean = getHallOfFame($);
     const gamesPlayed: number = getGamesPlayed($);
     const approximateValue: number | null = getApproximateValue($);
+
+    console.log(name, positions);
+    if (positions.indexOf("QB") !== -1){
+        const quarterBackData = getQuarterBackData($);
+    }
+
+    const stats = getStats($);
     return {name, positions, height, weight, birthDate, birthPlace, colleges, highSchool, draftInfo, hallOfFame, gamesPlayed, approximateValue};
 }
