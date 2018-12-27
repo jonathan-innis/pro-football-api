@@ -29,7 +29,7 @@ async function scrape(): Promise<void> {
 
 async function getPlayerLinks(URL: string): Promise<String[]> {
     const playerLinks: String[] = [];
-    const html = await rp(URL);
+    let html = await rp(URL);
     const $: CheerioStatic = cheerio.load(html);
     $('#div_players > p > a').each((i, element) => {
         playerLinks.push($(element).attr('href'));
@@ -38,7 +38,7 @@ async function getPlayerLinks(URL: string): Promise<String[]> {
 }
 
 async function getPlayerInfo(URL: string): Promise<PlayerInfo>{
-    const html = await rp(URL);
+    const html = preprocessHTML(await rp(URL));
     const $: CheerioStatic = cheerio.load(html);
     const name: string = getName($);
     const positions: string[] = getPositions($);
@@ -60,4 +60,20 @@ async function getPlayerInfo(URL: string): Promise<PlayerInfo>{
 
     const stats = getStats($);
     return {name, positions, height, weight, birthDate, birthPlace, colleges, highSchool, draftInfo, hallOfFame, gamesPlayed, approximateValue};
+}
+
+function preprocessHTML(html: any): any{
+    let commentEnd;
+    let placeholderStart = html.indexOf('<div class="placeholder"></div>', 0);
+    while (placeholderStart !== -1){
+        let commentStart = html.indexOf('<!--', placeholderStart);
+        let nextDivStart = html.indexOf('<div', commentStart);
+        if (nextDivStart - commentStart <= 15){
+            html = html.slice(undefined, commentStart) + html.slice(commentStart + 4, undefined);
+            commentEnd = html.indexOf('-->', nextDivStart);
+            html = html.slice(undefined, commentEnd) + html.slice(commentEnd + 4, undefined);
+        }
+        placeholderStart = html.indexOf('<div class="placeholder"></div>', nextDivStart);
+    }
+    return html;
 }
