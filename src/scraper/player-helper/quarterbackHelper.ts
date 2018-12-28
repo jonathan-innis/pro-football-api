@@ -1,5 +1,6 @@
 import { RecordData } from "../../constants";
 import { QuarterBack } from "../../server/models/playerTypes";
+import {parseRecord, parseFloatOrNull, parseIntOrNull} from '../helperFunctions';
 
 export function getQuarterBackData($: CheerioStatic): QuarterBack{
     const record: RecordData | null = getRecord($);
@@ -15,9 +16,7 @@ export function getQuarterBackData($: CheerioStatic): QuarterBack{
 function getRecord($: CheerioStatic): RecordData | null{
     const data = $('#info > div.stats_pullout > div:nth-child(3) > div:nth-child(1) > p:last-child');
     const rawRecord = $(data[0]).text();
-    const splitRecord = rawRecord.split('-');
-    if (splitRecord.length !== 3) return null;
-    return {won: parseInt(splitRecord[0]), lost: parseInt(splitRecord[1]), tied: parseInt(splitRecord[2])};
+    return parseRecord(rawRecord);
 }
 
 function getCompletionPct($: CheerioStatic): number | null{
@@ -54,18 +53,4 @@ function getFantasyPoints($: CheerioStatic): number | null{
     const data = $('#info > div.stats_pullout > div:nth-child(3) > div:nth-child(7) > p:last-child');
     const rawFantasyPoints = $(data[0]).text();
     return parseFloatOrNull(rawFantasyPoints);
-}
-
-function parseFloatOrNull(element: string): number | null{
-    if (isNaN(parseFloat(element))){
-        return null;
-    }
-    return parseFloat(element);
-}
-
-function parseIntOrNull(element: string): number | null{
-    if (isNaN(parseInt(element))){
-        return null;
-    }
-    return parseInt(element);
 }
