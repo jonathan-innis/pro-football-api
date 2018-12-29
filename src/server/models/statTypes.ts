@@ -64,3 +64,65 @@ export interface RushingReceivingStats{
         approximateValue: number | null
     }
 }
+
+export interface DefenseStats{
+    [year: number]: {
+        age: number | null,
+        team: string | null,
+        position: string | null,
+        number: number | null,
+        games: number | null,
+        gamesStarted: number | null,
+        interceptions: number | null,
+        interceptionYards: number | null,
+        interceptionTouchdowns: number | null,
+        interceptionLong: number | null,
+        passesDefended: number | null,
+        forcedFumbles: number | null,
+        fumbles: number | null,
+        fumblesRecovered: number | null,
+        fumbleYards: number | null,
+        fumbleTouchdowns: number | null,
+        sacks: number | null,
+        totalTackles: number | null,
+        soloTackles: number | null,
+        assistedTackles: number | null,
+        tacklesForLoss: number | null,
+        quarterbackHits: number | null,
+        safeties: number | null
+    }
+}
+
+export interface KickingStats{
+    [year: number]:{
+        age: number | null,
+        team: string | null,
+        position: string | null,
+        number: number | null,
+        games: number | null,
+        gamesStarted: number | null,
+        fieldGoalAttempts_0_19: number | null,
+        fieldGoalMakes_0_19: number | null,
+        fieldGoalAttempts_20_29: number | null,
+        fieldGoalMakes_20_29: number | null,
+        fieldGoalAttempts_30_39: number | null,
+        fieldGoalMakes_30_39: number | null,
+        fieldGoalAttempts_40_49: number | null,
+        fieldGoalMakes_40_49: number | null,
+        fieldGoalAttempts_50_above: number | null,
+        fieldGoalMakes_50_above: number | null,
+        totalFieldGoalsAttempted: number | null,
+        totalFieldGoalsMade: number | null,
+        longestFieldGoal: number | null,
+        fieldGoalPct: number | null,
+        xPtsAttempted: number | null,
+        xPtsMade: number | null,
+        xPtsPct: number | null,
+        punts: number | null,
+        puntingYards: number | null,
+        longestPunt: number | null,
+        blockedPunts: number | null,
+        yardsPerPunt: number | null,
+        approximateValue: number | null
+    }
+}

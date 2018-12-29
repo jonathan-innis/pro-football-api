@@ -5,10 +5,10 @@ export function getPassingStats($: CheerioStatic): PassingStats{
     let passingStats: PassingStats = {};
     const data = $('#passing th > a');
     $(data).each((index: number, element: CheerioElement) => {
-        const year: number = parseInt($(data).text());
+        const year: number = parseInt($(element).text());
         passingStats[year] = {
             age: parseIntOrNull(getTableStat($, index, 'age')),
-            team: getTableStat($, index, 'team') === '' ? null : getTableStat($, index, 'team'),
+            team: getTableTeam($, index) === '' ? null : getTableTeam($, index),
             position: getTableStat($, index, 'pos') === '' ? null : getTableStat($, index, 'pos'),
             number: parseIntOrNull(getTableStat($, index, 'uniform_number')),
             games: parseIntOrNull(getTableStat($, index, 'g')),
@@ -42,4 +42,8 @@ export function getPassingStats($: CheerioStatic): PassingStats{
 
 function getTableStat($: CheerioStatic, index: number, stat: string): string{
     return $(`#passing tbody tr:nth-child(${index + 1}) td[data-stat="${stat}"]`).text();
+}
+
+function getTableTeam($: CheerioStatic, index: number): string{
+    return $(`#passing tbody tr:nth-child(${index + 1}) td[data-stat="team"] > a`).attr('title');
 }
