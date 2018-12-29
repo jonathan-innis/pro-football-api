@@ -1,5 +1,5 @@
 import { RushingReceivingStats } from "../../server/models/statTypes";
-import { parseRecord, parseFloatOrNull, parseIntOrNull } from "../helperFunctions";
+import { parseFloatOrNull, parseIntOrNull } from "../helperFunctions";
 
 export function getRushingReceivingStats($: CheerioStatic): RushingReceivingStats{
     let rushingReceivingStats: RushingReceivingStats = {};
