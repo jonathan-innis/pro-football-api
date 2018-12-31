@@ -1,7 +1,16 @@
-import { RecordData } from "./playerTypes";
+import { QuarterBack, RunningBack, Receiver, OffensiveLine, DefensiveLine, DefensiveBackfield, RecordData } from './playerTypes';
 
-export interface AllStats{
-    [type: string]: PassingStats | RushingReceivingStats | DefenseStats | KickingStats | ReturnStats
+type Stats = {
+    careerStats: CareerStats;
+    yearlyStats: YearlyStats;
+}
+
+interface CareerStats {
+    [position: string]: QuarterBack | RunningBack | Receiver | OffensiveLine | DefensiveLine | DefensiveBackfield;
+}
+
+export interface YearlyStats{
+    [type: string]: PassingStats | RushingReceivingStats | DefenseStats | KickingStats | ReturnStats;
 }
 
 export interface PassingStats{

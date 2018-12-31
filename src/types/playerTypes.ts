@@ -1,4 +1,4 @@
-import { AllStats } from './statTypes';
+import { YearlyStats } from "./statTypes";
 
 export type OffensiveLine = {
     gamesStarted: number;
@@ -62,7 +62,7 @@ export type PlayerInfo = {
     hallOfFame: boolean;
     gamesPlayed: number;
     approximateValue: number | null;
-    stats: AllStats;
+    stats: YearlyStats;
 }
 
 export type RecordData = {

@@ -1,21 +1,7 @@
 import { prop, Typegoose } from 'typegoose-es5';
 import {Model, Document} from 'mongoose';
 import { DraftInfo } from '../../types/playerTypes';
-import { QuarterBack, RunningBack, Receiver, OffensiveLine, DefensiveLine, DefensiveBackfield } from '../../types/playerTypes';
-import { PassingStats } from '../../types/statTypes';
-
-type Stats = {
-    careerStats: CareerStats;
-    yearlyStats: YearlyStats;
-}
-
-interface CareerStats {
-    [position: string]: QuarterBack | RunningBack | Receiver | OffensiveLine | DefensiveLine | DefensiveBackfield;
-}
-
-interface YearlyStats{
-    [type: string]: PassingStats;
-}
+import { Stats } from 'fs';
 
 export class Player extends Typegoose{
     @prop({required: true}) name?: string;
