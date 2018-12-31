@@ -1,6 +1,8 @@
-import { RecordData } from "../../constants";
-import { longStackTraces } from "bluebird";
-import { getApproximateValue } from "../../scraper/player-helper/playerHelper";
+import { RecordData } from "./playerTypes";
+
+export interface AllStats{
+    [type: string]: PassingStats | RushingReceivingStats | DefenseStats | KickingStats | ReturnStats
+}
 
 export interface PassingStats{
     [year: number]: {
@@ -124,5 +126,27 @@ export interface KickingStats{
         blockedPunts: number | null,
         yardsPerPunt: number | null,
         approximateValue: number | null
+    }
+}
+
+export interface ReturnStats{
+    [year: number]:{
+        age: number | null,
+        team: string | null,
+        position: string | null,
+        number: number | null,
+        games: number | null,
+        gamesStarted: number | null,
+        puntReturns: number | null,
+        puntReturnYards: number | null,
+        puntReturnTouchdowns: number | null,
+        puntReturnLong: number | null,
+        yardsPerPuntReturn: number | null,
+        kickReturns: number | null,
+        kickReturnYards: number | null,
+        kickReturnTouchdowns: number | null,
+        kickReturnLong: number | null,
+        yardsPerKickReturn: number | null,
+        allPurposeYards: number | null
     }
 }

@@ -2,26 +2,37 @@ import { getPassingStats } from "./passingHelper";
 import { getRushingReceivingStats } from "./rushingReceivingHelper";
 import { getDefenseStats } from "./defenseHelper";
 import { getKickingStats } from "./kickingHelper";
+import { getReturnStats } from "./returnHelper";
+import { AllStats } from "../../server/models/statTypes";
 
-export function getStats($: CheerioStatic){
+export function getStats($: CheerioStatic): AllStats{
     const data = $('div.table_wrapper div.section_heading > h2');
+    let stats: AllStats = {};
     $(data).each((index: number, element: CheerioElement) => {
         const header = $(element).text();
         if (header === 'Passing'){
             const passingStats = getPassingStats($);
-            console.log(passingStats);
+            stats['passing'] = passingStats;
         }
         else if (header === 'Rushing & Receiving' || header === 'Receiving & Rushing'){
             const rushingReceivingStats = getRushingReceivingStats($);
-            console.log(rushingReceivingStats);
+            stats['rushingreceiving'] = rushingReceivingStats;
         }
         else if (header === 'Defense & Fumbles'){
             const defenseStats = getDefenseStats($);
-            console.log(defenseStats);
+            stats['defense'] = defenseStats;
         }
         else if (header === 'Kicking & Punting'){
             const kickingStats = getKickingStats($);
-            console.log(kickingStats);
+            stats['kicking'] = kickingStats;
+        }
+        else if (header === 'Kick & Punt Returns'){
+            const returnStats = getReturnStats($);
+            stats['returns'] = returnStats;
+        }
+        else{
+            console.log(header);
         }
     });
+    return stats;
 }

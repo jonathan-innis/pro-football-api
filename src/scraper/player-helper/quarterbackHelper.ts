@@ -1,5 +1,4 @@
-import { RecordData } from "../../constants";
-import { QuarterBack } from "../../server/models/playerTypes";
+import { QuarterBack, RecordData } from "../../types/playerTypes";
 import {parseRecord, parseFloatOrNull, parseIntOrNull} from '../helperFunctions';
 
 export function getQuarterBackData($: CheerioStatic): QuarterBack{

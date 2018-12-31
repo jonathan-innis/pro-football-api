@@ -1,8 +1,8 @@
 import { prop, Typegoose } from 'typegoose-es5';
 import {Model, Document} from 'mongoose';
-import { DraftInfo } from '../../constants';
-import { QuarterBack, RunningBack, Receiver, OffensiveLine, DefensiveLine, DefensiveBackfield } from './playerTypes';
-import { PassingStats } from './statTypes';
+import { DraftInfo } from '../../types/playerTypes';
+import { QuarterBack, RunningBack, Receiver, OffensiveLine, DefensiveLine, DefensiveBackfield } from '../../types/playerTypes';
+import { PassingStats } from '../../types/statTypes';
 
 type Stats = {
     careerStats: CareerStats;

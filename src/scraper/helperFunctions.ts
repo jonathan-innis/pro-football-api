@@ -1,4 +1,4 @@
-import {RecordData} from '../constants';
+import { RecordData } from '../types/playerTypes';
 
 export function parseFloatOrNull(element: string): number | null{
     if (isNaN(parseFloat(element))){

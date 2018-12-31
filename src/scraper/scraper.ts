@@ -1,7 +1,8 @@
 import rp = require('request-promise');
 import cheerio = require('cheerio');
 import mongoose = require('mongoose');
-import {MONGO_URL, DraftInfo, PlayerInfo} from '../constants';
+import { MONGO_URL } from '../types/constants';
+import { DraftInfo, PlayerInfo } from '../types/playerTypes';
 import {getName, getPositions, getHeight, getWeight, getBirthDate, getBirthPlace, getCollege, getHighSchool, getDraftInfo, getHallOfFame, getGamesPlayed, getApproximateValue} from './player-helper/playerHelper';
 import { PlayerModel } from '../server/models/Player';
 import { getQuarterBackData } from './player-helper/quarterbackHelper';
@@ -59,7 +60,7 @@ async function getPlayerInfo(URL: string): Promise<PlayerInfo>{
     }
 
     const stats = getStats($);
-    return {name, positions, height, weight, birthDate, birthPlace, colleges, highSchool, draftInfo, hallOfFame, gamesPlayed, approximateValue};
+    return {name, positions, height, weight, birthDate, birthPlace, colleges, highSchool, draftInfo, hallOfFame, gamesPlayed, approximateValue, stats};
 }
 
 function preprocessHTML(html: any): any{
