@@ -1,6 +1,6 @@
 import express = require('express');
 import mongoose = require('mongoose');
-import {MONGO_URL} from '../constants';
+import {MONGO_URL} from '../types/constants';
 
 import {WelcomeController} from './controllers';
 

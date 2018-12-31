@@ -1,4 +1,4 @@
-import { RushingReceivingStats } from "../../server/models/statTypes";
+import { RushingReceivingStats } from "../../types/statTypes";
 import { parseFloatOrNull, parseIntOrNull } from "../helperFunctions";
 
 export function getRushingReceivingStats($: CheerioStatic): RushingReceivingStats{

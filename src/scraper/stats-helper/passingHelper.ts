@@ -1,4 +1,4 @@
-import { PassingStats } from "../../server/models/statTypes";
+import { PassingStats } from "../../types/statTypes";
 import { parseRecord, parseFloatOrNull, parseIntOrNull } from "../helperFunctions";
 
 export function getPassingStats($: CheerioStatic): PassingStats{

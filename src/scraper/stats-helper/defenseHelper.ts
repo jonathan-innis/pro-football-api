@@ -1,4 +1,4 @@
-import { DefenseStats } from "../../server/models/statTypes";
+import { DefenseStats } from "../../types/statTypes";
 import { parseIntOrNull } from "../helperFunctions";
 
 export function getDefenseStats($: CheerioStatic): DefenseStats{

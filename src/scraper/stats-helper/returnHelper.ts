@@ -1,4 +1,4 @@
-import { ReturnStats } from "../../server/models/statTypes";
+import { ReturnStats } from "../../types/statTypes";
 import { parseFloatOrNull, parseIntOrNull } from "../helperFunctions";
 
 export function getReturnStats($: CheerioStatic): ReturnStats{

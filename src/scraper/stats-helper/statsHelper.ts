@@ -3,7 +3,7 @@ import { getRushingReceivingStats } from "./rushingReceivingHelper";
 import { getDefenseStats } from "./defenseHelper";
 import { getKickingStats } from "./kickingHelper";
 import { getReturnStats } from "./returnHelper";
-import { AllStats } from "../../server/models/statTypes";
+import { AllStats } from "../../types/statTypes";
 
 export function getStats($: CheerioStatic): AllStats{
     const data = $('div.table_wrapper div.section_heading > h2');

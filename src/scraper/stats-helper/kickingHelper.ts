@@ -1,4 +1,4 @@
-import { KickingStats } from "../../server/models/statTypes";
+import { KickingStats } from "../../types/statTypes";
 import { parseIntOrNull, parseFloatOrNull } from "../helperFunctions";
 
 export function getKickingStats($: CheerioStatic): KickingStats{
