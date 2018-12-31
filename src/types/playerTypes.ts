@@ -27,11 +27,11 @@ export type QuarterBack = {
 }
 
 export type Receiver = {
-    receptions: number;
-    yards: number;
-    yardsPerReception: number;
-    touchdowns: number;
-    fantasyPoints: number;
+    receptions: number | null;
+    yards: number | null;
+    yardsPerReception: number | null;
+    touchdowns: number | null;
+    fantasyPoints: number | null;
 }
 
 export type RunningBack = {

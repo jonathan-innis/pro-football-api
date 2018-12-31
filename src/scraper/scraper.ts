@@ -7,6 +7,7 @@ import {getName, getPositions, getHeight, getWeight, getBirthDate, getBirthPlace
 import { PlayerModel } from '../server/models/Player';
 import { getQuarterBackData } from './player-helper/quarterbackHelper';
 import { getStats } from './stats-helper/statsHelper';
+import { getReceiverData } from './player-helper/receiverHelper';
 
 mongoose.connect(MONGO_URL, {useNewUrlParser: true}).then(() => {
     scrape().then(() => {
@@ -54,9 +55,13 @@ async function getPlayerInfo(URL: string): Promise<PlayerInfo>{
     const gamesPlayed: number = getGamesPlayed($);
     const approximateValue: number | null = getApproximateValue($);
 
-    console.log(name, positions);
-    if (positions.indexOf("QB") !== -1){
+    const firstHeader = getFirstHeader($);
+
+    if (firstHeader === 'QBrec'){
         const quarterBackData = getQuarterBackData($);
+    }
+    else if (firstHeader === 'Rec'){
+        const receiverData = getReceiverData($);
     }
 
     const stats = getStats($);
@@ -77,4 +82,9 @@ function preprocessHTML(html: any): any{
         placeholderStart = html.indexOf('<div class="placeholder"></div>', nextDivStart);
     }
     return html;
+}
+
+function getFirstHeader($: CheerioStatic): string{
+    let data = $('#info > div.stats_pullout > div:nth-child(3) > div:nth-child(1) > h4');
+    return $(data[0]).text();
 }
