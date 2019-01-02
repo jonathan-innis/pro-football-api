@@ -10,25 +10,30 @@ export function getStats($: CheerioStatic): Stats{
     let stats: Stats = {};
     $(data).each((index: number, element: CheerioElement) => {
         const header = $(element).text();
-        if (header === 'Passing'){
-            const passingStats = getPassingStats($);
-            stats['passing'] = passingStats;
-        }
-        else if (header === 'Rushing & Receiving' || header === 'Receiving & Rushing'){
-            const rushingReceivingStats = getRushingReceivingStats($);
-            stats['rushingreceiving'] = rushingReceivingStats;
-        }
-        else if (header === 'Defense & Fumbles'){
-            const defenseStats = getDefenseStats($);
-            stats['defense'] = defenseStats;
-        }
-        else if (header === 'Kicking & Punting'){
-            const kickingStats = getKickingStats($);
-            stats['kicking'] = kickingStats;
-        }
-        else if (header === 'Kick & Punt Returns'){
-            const returnStats = getReturnStats($);
-            stats['returns'] = returnStats;
+        switch(header){
+            case('Passing'):
+                const passingStats = getPassingStats($);
+                stats['passing'] = passingStats;
+                break;
+            case('Rushing & Receiving'):
+            case('Receiving & Rushing'):
+                const rushingReceivingStats = getRushingReceivingStats($);
+                stats['rushingreceiving'] = rushingReceivingStats;
+                break;
+            case('Defense & Fumbles'):
+                const defenseStats = getDefenseStats($);
+                stats['defense'] = defenseStats;
+                break;
+            case('Kicking & Punting'):
+                const kickingStats = getKickingStats($);
+                stats['kicking'] = kickingStats;
+                break;
+            case('Kick & Punt Returns'):
+                const returnStats = getReturnStats($);
+                stats['returns'] = returnStats;
+                break;
+            default:
+                break;
         }
     });
 
