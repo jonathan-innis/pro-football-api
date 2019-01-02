@@ -3,11 +3,11 @@ import { getRushingReceivingStats } from "./rushingReceivingHelper";
 import { getDefenseStats } from "./defenseHelper";
 import { getKickingStats } from "./kickingHelper";
 import { getReturnStats } from "./returnHelper";
-import { YearlyStats } from "../../types/statTypes";
+import { Stats } from "../../types/statTypes";
 
-export function getStats($: CheerioStatic): YearlyStats{
+export function getStats($: CheerioStatic): Stats{
     const data = $('div.table_wrapper div.section_heading > h2');
-    let stats: YearlyStats = {};
+    let stats: Stats = {};
     $(data).each((index: number, element: CheerioElement) => {
         const header = $(element).text();
         if (header === 'Passing'){
@@ -29,9 +29,6 @@ export function getStats($: CheerioStatic): YearlyStats{
         else if (header === 'Kick & Punt Returns'){
             const returnStats = getReturnStats($);
             stats['returns'] = returnStats;
-        }
-        else{
-            console.log(header);
         }
     });
 

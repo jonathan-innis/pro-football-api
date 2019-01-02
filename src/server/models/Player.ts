@@ -1,7 +1,7 @@
 import { prop, Typegoose } from 'typegoose-es5';
 import {Model, Document} from 'mongoose';
 import { DraftInfo } from '../../types/playerTypes';
-import { Stats } from 'fs';
+import { Stats } from '../../types/statTypes';
 
 export class Player extends Typegoose{
     @prop({required: true}) name?: string;
@@ -31,4 +31,4 @@ export class Player extends Typegoose{
     @prop() stats?: Stats;
 }
 
-export const PlayerModel: Model<Document> = new Player().getModelForClass(Player);
+export const PlayerModel: Model<Document> = new Player().getModelForClass(Player, {schemaOptions: {collection: 'players'}});
