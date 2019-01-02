@@ -45,3 +45,18 @@ export function getFirstHeader($: CheerioStatic): string{
     let data = $('#info > div.stats_pullout > div:nth-child(3) > div:nth-child(1) > h4');
     return $(data[0]).text();
 }
+
+export function searchOverviewBlock($: CheerioStatic, searchableItem: string): string | null{
+    let element = null;
+    let blockIndex = 1;
+    while (!element && blockIndex < 10){
+        let data = $(`#meta > div > p:nth-child(${blockIndex})`);
+        let rawElement = $(data[0]).text().replace(/(\n\t|\n|\t)/gm,"");
+        element = rawElement.split(searchableItem)[1];
+        if (element){
+            return element;
+        }
+        blockIndex++;
+    }
+    return null;
+}
