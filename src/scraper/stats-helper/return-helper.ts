@@ -1,5 +1,5 @@
-import { ReturnStats } from "../../types/statTypes";
-import { parseFloatOrNull, parseIntOrNull } from "../helperFunctions";
+import { ReturnStats } from "../../types/stat-types";
+import { parseFloatOrNull, parseIntOrNull } from "../helper-functions";
 
 export function getReturnStats($: CheerioStatic): ReturnStats{
     let returnStats: ReturnStats = {};

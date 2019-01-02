@@ -1,5 +1,5 @@
-import { DefenseStats } from "../../types/statTypes";
-import { parseIntOrNull } from "../helperFunctions";
+import { DefenseStats } from "../../types/stat-types";
+import { parseIntOrNull } from "../helper-functions";
 
 export function getDefenseStats($: CheerioStatic): DefenseStats{
     let defenseStats: DefenseStats = {};

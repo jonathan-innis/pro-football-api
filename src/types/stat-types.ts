@@ -1,4 +1,4 @@
-import { RecordData } from "./playerTypes";
+import { RecordData } from "./player-types";
 
 export interface Stats{
     [type: string]: PassingStats | RushingReceivingStats | DefenseStats | KickingStats | ReturnStats;

@@ -1,4 +1,4 @@
-import { Stats } from "./statTypes";
+import { Stats } from "./stat-types";
 
 export type DraftInfo = {
     team: string;

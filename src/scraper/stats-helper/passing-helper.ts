@@ -1,5 +1,5 @@
-import { PassingStats } from "../../types/statTypes";
-import { parseRecord, parseFloatOrNull, parseIntOrNull } from "../helperFunctions";
+import { PassingStats } from "../../types/stat-types";
+import { parseRecord, parseFloatOrNull, parseIntOrNull } from "../helper-functions";
 
 export function getPassingStats($: CheerioStatic): PassingStats{
     let passingStats: PassingStats = {};

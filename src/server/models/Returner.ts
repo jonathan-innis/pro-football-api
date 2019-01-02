@@ -1,7 +1,7 @@
 import {prop} from 'typegoose-es5';
 import { Player } from "./Player";
 import {Model, Document} from 'mongoose';
-import { parseIntOrNull, getSummaryData, parseFloatOrNull } from '../../scraper/helperFunctions';
+import { parseIntOrNull, getSummaryData, parseFloatOrNull } from '../../scraper/helper-functions';
 
 export class Returner extends Player{
     @prop() returns?: number | null;
