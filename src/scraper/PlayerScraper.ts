@@ -31,7 +31,7 @@ export class PlayerScraper{
         const height: number = this.getHeight();
         const weight: number = this.getWeight();
         const birthDate: Date = this.getBirthDate();
-        const birthPlace: string = this.getBirthPlace();
+        const birthPlace: string | null = this.getBirthPlace();
         const colleges: string[] | null = this.getCollege()
         const highSchool: string | null = this.getHighSchool();
         const draftInfo: DraftInfo | null = this.getDraftInfo();
@@ -51,48 +51,75 @@ export class PlayerScraper{
             case 'QBrec':
                 const quarterBackData = QuarterBack.getData($);
                 model = new QuarterBackModel({...this.playerInfo, ...quarterBackData});
-                model.save();
+                model.save().then(() =>{
+                    if (this.playerInfo)
+                        console.log(`Saved ${this.playerInfo.name}`);
+                });
                 break;
             case 'Rec':
                 const receiverData = Receiver.getData($);
                 model = new ReceiverModel({...this.playerInfo, ...receiverData});
-                model.save();
+                model.save().then(() =>{
+                    if (this.playerInfo)
+                        console.log(`Saved ${this.playerInfo.name}`);
+                });
                 break;
             case 'Rush':
                 const runningBackData = RunningBack.getData($);
                 model = new RunningBackModel({...this.playerInfo, ...runningBackData});
-                model.save();
+                model.save().then(() =>{
+                    if (this.playerInfo)
+                        console.log(`Saved ${this.playerInfo.name}`);
+                });
                 break;
             case 'FGM':
                 const kickerData = Kicker.getData($);
                 model = new KickerModel({...this.playerInfo, ...kickerData});
-                model.save();
+                model.save().then(() =>{
+                    if (this.playerInfo)
+                        console.log(`Saved ${this.playerInfo.name}`);
+                });
                 break;
             case 'Int':
                 const defensiveBackfieldData = DefensiveBackfield.getData($);
                 model = new DefensiveBackfieldModel({...this.playerInfo, ...defensiveBackfieldData});
-                model.save();
+                model.save().then(() =>{
+                    if (this.playerInfo)
+                        console.log(`Saved ${this.playerInfo.name}`);
+                });
                 break;
             case 'Sk':
                 const defensiveLineData = DefensiveLine.getData($);
                 model = new DefensiveLineModel({...this.playerInfo, ...defensiveLineData});
-                model.save();
+                model.save().then(() =>{
+                    if (this.playerInfo)
+                        console.log(`Saved ${this.playerInfo.name}`);
+                });
                 break;
             case 'GS':
                 const offensiveLineData = OffensiveLine.getData($);
                 model = new OffensiveLineModel({...this.playerInfo, ...offensiveLineData});
-                model.save();
+                model.save().then(() =>{
+                    if (this.playerInfo)
+                        console.log(`Saved ${this.playerInfo.name}`);
+                });
                 break;
             case 'Ret':
             case 'Rt':
                 const returnerData = Returner.getData($);
                 model = new ReturnerModel({...this.playerInfo, ...returnerData});
-                model.save();
+                model.save().then(() =>{
+                    if (this.playerInfo)
+                        console.log(`Saved ${this.playerInfo.name}`);
+                });
                 break;
             default:
                 firstHeader && this.playerInfo ? console.log(this.playerInfo.name, firstHeader) : null;
                 model = new PlayerModel(this.playerInfo);
-                model.save();
+                model.save().then(() =>{
+                    if (this.playerInfo)
+                        console.log(`Saved ${this.playerInfo.name}`);
+                });
                 break;
         }
     }
@@ -207,13 +234,16 @@ export class PlayerScraper{
         }
     }
     
-    getBirthPlace(): string{
+    getBirthPlace(): string | null{
         try{
             const $ = this.$;
             const data = $('#meta > div > p:nth-child(5) > span:nth-child(3)');
             const rawPlace = $(data[0]).text().replace(/(\n\t|\n)/gm,""); //replaces extra tabs and newlines
-            const place = rawPlace.split('in')[1].slice(1); //removes the word in and gets rid of extra spaces
-            return place;
+            if (rawPlace){
+                const place = rawPlace.split('in')[1].slice(1); //removes the word in and gets rid of extra spaces
+                return place;
+            }
+            return null;
         }
         catch(error){
             console.error(error);

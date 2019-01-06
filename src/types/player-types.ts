@@ -13,7 +13,7 @@ export type PlayerInfo = {
     height: number;
     weight: number;
     birthDate: Date;
-    birthPlace: string;
+    birthPlace: string | null;
     colleges: string[] | null;
     highSchool: string | null;
     draftInfo: DraftInfo | null;

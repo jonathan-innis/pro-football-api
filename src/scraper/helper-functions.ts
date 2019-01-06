@@ -26,24 +26,35 @@ export function getSummaryData($: CheerioStatic, index: number): string{
 }
 
 export function preprocessHTML(html: any): any{
-    let commentEnd;
-    let placeholderStart = html.indexOf('<div class="placeholder"></div>', 0);
-    while (placeholderStart !== -1){
-        let commentStart = html.indexOf('<!--', placeholderStart);
-        let nextDivStart = html.indexOf('<div', commentStart);
-        if (nextDivStart - commentStart <= 15){
-            html = html.slice(undefined, commentStart) + html.slice(commentStart + 4, undefined);
-            commentEnd = html.indexOf('-->', nextDivStart);
-            html = html.slice(undefined, commentEnd) + html.slice(commentEnd + 4, undefined);
+    try{
+        let commentEnd;
+        let placeholderStart = html.indexOf('<div class="placeholder"></div>', 0);
+        while (placeholderStart !== -1){
+            let commentStart = html.indexOf('<!--', placeholderStart);
+            let nextDivStart = html.indexOf('<div', commentStart);
+            if (nextDivStart - commentStart <= 15){
+                html = html.slice(undefined, commentStart) + html.slice(commentStart + 4, undefined);
+                commentEnd = html.indexOf('-->', nextDivStart);
+                html = html.slice(undefined, commentEnd) + html.slice(commentEnd + 4, undefined);
+            }
+            placeholderStart = html.indexOf('<div class="placeholder"></div>', nextDivStart);
         }
-        placeholderStart = html.indexOf('<div class="placeholder"></div>', nextDivStart);
+        return html;
     }
-    return html;
+    catch(error){
+        console.error(error);
+    }
 }
 
 export function getFirstHeader($: CheerioStatic): string{
-    let data = $('#info > div.stats_pullout > div:nth-child(3) > div:nth-child(1) > h4');
-    return $(data[0]).text();
+    try{
+        let data = $('#info > div.stats_pullout > div:nth-child(3) > div:nth-child(1) > h4');
+        return $(data[0]).text();
+    }
+    catch(error){
+        console.error(error);
+        return '';
+    }
 }
 
 export function searchOverviewBlock($: CheerioStatic, searchableItem: string): string | null{
