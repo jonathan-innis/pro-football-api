@@ -1,8 +1,8 @@
 import {prop} from 'typegoose-es5';
 import { Player } from "./Player";
 import {Model, Document} from 'mongoose';
-import { RecordData } from '../../types/playerTypes';
-import { parseRecord, parseFloatOrNull, parseIntOrNull, getSummaryData } from '../../scraper/helperFunctions';
+import { RecordData } from '../../types/player-types';
+import { parseRecord, parseFloatOrNull, parseIntOrNull, getSummaryData } from '../../scraper/helper-functions';
 
 export class QuarterBack extends Player{
     @prop() record?: RecordData | null;

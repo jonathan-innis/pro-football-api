@@ -1,7 +1,7 @@
 import {prop} from 'typegoose-es5';
 import { Player } from "./Player";
 import {Model, Document} from 'mongoose';
-import { parseIntOrNull, getSummaryData, parseFloatOrNull } from '../../scraper/helperFunctions';
+import { parseIntOrNull, getSummaryData, parseFloatOrNull } from '../../scraper/helper-functions';
 
 export class RunningBack extends Player{
     @prop() attempts?: number | null;

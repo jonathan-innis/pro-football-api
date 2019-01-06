@@ -1,7 +1,7 @@
 import {prop} from 'typegoose-es5';
 import { Player } from "./Player";
 import {Model, Document} from 'mongoose';
-import { parseFloatOrNull, getSummaryData, parseIntOrNull } from '../../scraper/helperFunctions';
+import { parseFloatOrNull, getSummaryData, parseIntOrNull } from '../../scraper/helper-functions';
 
 export class DefensiveLine extends Player{
     @prop() sacks?: number | null;

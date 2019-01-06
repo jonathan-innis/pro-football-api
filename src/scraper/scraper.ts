@@ -3,7 +3,7 @@ import cheerio = require('cheerio');
 import mongoose = require('mongoose');
 import { MONGO_URL } from '../types/constants';
 import { PlayerScraper } from './PlayerScraper';
-import { preprocessHTML } from './helperFunctions';
+import { preprocessHTML } from './helper-functions';
 
 mongoose.connect(MONGO_URL, {useNewUrlParser: true}).then(() => {
     scrape().then(() => {

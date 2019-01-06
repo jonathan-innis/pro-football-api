@@ -1,7 +1,7 @@
 import { prop, Typegoose } from 'typegoose-es5';
 import {Model, Document} from 'mongoose';
-import { DraftInfo } from '../../types/playerTypes';
-import { Stats } from '../../types/statTypes';
+import { DraftInfo } from '../../types/player-types';
+import { Stats } from '../../types/stat-types';
 
 export class Player extends Typegoose{
     @prop({required: true}) name?: string;

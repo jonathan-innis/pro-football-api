@@ -1,7 +1,7 @@
 import {prop} from 'typegoose-es5';
 import { Player } from "./Player";
 import {Model, Document} from 'mongoose';
-import { parseIntOrNull, getSummaryData } from '../../scraper/helperFunctions';
+import { parseIntOrNull, getSummaryData } from '../../scraper/helper-functions';
 
 export class DefensiveBackfield extends Player{
     @prop() interceptions?: number | null;
