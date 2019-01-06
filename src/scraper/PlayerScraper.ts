@@ -1,11 +1,6 @@
 import { PlayerInfo, DraftInfo } from "../types/player-types";
 import { searchOverviewBlock, getFirstHeader } from "./helper-functions";
 import { Stats } from "../types/stat-types";
-import { getPassingStats } from "./stats-helper/passing-helper";
-import { getRushingReceivingStats } from "./stats-helper/rushing-receiving-helper";
-import { getDefenseStats } from "./stats-helper/defense-helper";
-import { getKickingStats } from "./stats-helper/kicking-helper";
-import { getReturnStats } from "./stats-helper/return-helper";
 import { QuarterBack, QuarterBackModel } from "../server/models/Quarterback";
 import { Receiver, ReceiverModel } from "../server/models/Receiver";
 import { RunningBackModel, RunningBack } from "../server/models/RunningBack";
@@ -16,6 +11,11 @@ import { OffensiveLine, OffensiveLineModel } from "../server/models/OffensiveLin
 import { Returner, ReturnerModel } from "../server/models/Returner";
 import { PlayerModel } from "../server/models/Player";
 import { Document } from 'mongoose';
+import { PassingStatsParser } from "./stats-helper/PassingStatsParser";
+import { RushingReceivingStatsParser } from "./stats-helper/RushingReceivingStatsParser";
+import { DefenseStatsParser } from "./stats-helper/DefenseStatsParser";
+import { KickingStatsParser } from "./stats-helper/KickingStatsParser";
+import { ReturnStatsParser } from "./stats-helper/ReturnStatsParser";
 
 export class PlayerScraper{
     $: CheerioStatic;
@@ -105,25 +105,30 @@ export class PlayerScraper{
             const header = $(element).text();
             switch(header){
                 case('Passing'):
-                    const passingStats = getPassingStats($);
-                    stats['passing'] = passingStats;
+                    const passingStatsParser = new PassingStatsParser($);
+                    passingStatsParser.parse();
+                    stats['passing'] = passingStatsParser.stats;
                     break;
                 case('Rushing & Receiving'):
                 case('Receiving & Rushing'):
-                    const rushingReceivingStats = getRushingReceivingStats($);
-                    stats['rushingreceiving'] = rushingReceivingStats;
+                    const rushingReceivingStatsParser = new RushingReceivingStatsParser($);
+                    rushingReceivingStatsParser.parse();
+                    stats['rushingreceiving'] = rushingReceivingStatsParser.stats;
                     break;
                 case('Defense & Fumbles'):
-                    const defenseStats = getDefenseStats($);
-                    stats['defense'] = defenseStats;
+                    const defenseStatsParser = new DefenseStatsParser($);
+                    defenseStatsParser.parse();
+                    stats['defense'] = defenseStatsParser.stats;
                     break;
                 case('Kicking & Punting'):
-                    const kickingStats = getKickingStats($);
-                    stats['kicking'] = kickingStats;
+                    const kickingStatsParser = new KickingStatsParser($);
+                    kickingStatsParser.parse();
+                    stats['kicking'] = kickingStatsParser.stats;
                     break;
                 case('Kick & Punt Returns'):
-                    const returnStats = getReturnStats($);
-                    stats['returns'] = returnStats;
+                    const returnStatsParser = new ReturnStatsParser($);
+                    returnStatsParser.parse();
+                    stats['returns'] = returnStatsParser.stats;
                     break;
                 default:
                     break;
