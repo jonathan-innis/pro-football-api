@@ -11,11 +11,11 @@ import { OffensiveLine, OffensiveLineModel } from "../server/models/OffensiveLin
 import { Returner, ReturnerModel } from "../server/models/Returner";
 import { PlayerModel } from "../server/models/Player";
 import { Document } from 'mongoose';
-import { PassingStatsParser } from "./stats-helper/PassingStatsParser";
-import { RushingReceivingStatsParser } from "./stats-helper/RushingReceivingStatsParser";
-import { DefenseStatsParser } from "./stats-helper/DefenseStatsParser";
-import { KickingStatsParser } from "./stats-helper/KickingStatsParser";
-import { ReturnStatsParser } from "./stats-helper/ReturnStatsParser";
+import { PassingStatsParser } from "./stats-parsers/PassingStatsParser";
+import { RushingReceivingStatsParser } from "./stats-parsers/RushingReceivingStatsParser";
+import { DefenseStatsParser } from "./stats-parsers/DefenseStatsParser";
+import { KickingStatsParser } from "./stats-parsers/KickingStatsParser";
+import { ReturnStatsParser } from "./stats-parsers/ReturnStatsParser";
 
 export class PlayerScraper{
     $: CheerioStatic;
